@@ -29,6 +29,9 @@ public class EventCreateHandlerTest extends BaseFileTest {
 
     @Test
     public void testHandleEvent() throws Exception {
+
+        System.out.println("Starting testHandleEvent...");
+
         Path file = Paths.get(srcDir, "PresidentElect.java");
         generateFile(file, 333);
 
@@ -44,8 +47,8 @@ public class EventCreateHandlerTest extends BaseFileTest {
         }
 
 
-        assertThat(fileNames.size(),is(1));
-        assertThat(fileNames.get(Paths.get(targetDir, "PresidentElect_" +curremtTime.toString()+ ".java").toString()),is(true));
+        assertThat("Assert that PresidentElect.java file was moved to target dir",fileNames.size(),is(1));
+        assertThat("Assert that PresidentElect.java file was renamed correctly",fileNames.get(Paths.get(targetDir, "PresidentElect_" +curremtTime.toString()+ ".java").toString()),is(true));
 
     }
 

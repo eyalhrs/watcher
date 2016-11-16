@@ -27,6 +27,9 @@ public class DirectoryWatcherHandlerTest extends BaseFileTest {
 
     @Test
     public void testSimpleTextFileTransfter() throws Exception {
+
+        System.out.println("Starting testSimpleTextFileTransfter...");
+
         //registers srcDir and all of his sub directories
         DirectoryWatcherHandler dirWatcher = new DirectoryWatcherHandler(srcPath,targetPath);
         dirWatcher.register();
@@ -44,12 +47,15 @@ public class DirectoryWatcherHandlerTest extends BaseFileTest {
         }
 
         dirWatcher.unregister();
-        assertThat(fileNames.size(),is(1));
-        assertThat(fileNames.get(0),is(Paths.get(targetDir, "eyal.txt").toString()));
+        assertThat("Assert that eyal.txt file was moved to target dir",fileNames.size(),is(1));
+        assertThat("Assert that eyal.txt file was renamed correctly",fileNames.get(0),is(Paths.get(targetDir, "eyal.txt").toString()));
     }
 
     @Test
     public void testMultipleTextFileTransfter() throws Exception {
+
+        System.out.println("Starting testMultipleTextFileTransfter...");
+
         //registers srcDir and all of his sub directories
         DirectoryWatcherHandler dirWatcher = new DirectoryWatcherHandler(srcPath,targetPath);
         dirWatcher.register();
@@ -72,12 +78,15 @@ public class DirectoryWatcherHandlerTest extends BaseFileTest {
 
         assertThat(fileNames.size(),is(100));
         for (int i = 0 ; i < 100 ; i++) {
-            assertThat(fileNames.get(Paths.get(targetDir, "eyal"+i+".txt").toString()),is(true));
+            assertThat("Assert that "+"eyal"+i+".txt"+" file was moved to target dir",fileNames.get(Paths.get(targetDir, "eyal"+i+".txt").toString()),is(true));
         }
     }
 
     @Test
     public void testSubDirTransfter() throws Exception {
+
+        System.out.println("Starting testSubDirTransfter...");
+
         //registers srcDir and all of his sub directories
         DirectoryWatcherHandler dirWatcher = new DirectoryWatcherHandler(srcPath,targetPath);
         dirWatcher.register();
@@ -102,9 +111,9 @@ public class DirectoryWatcherHandlerTest extends BaseFileTest {
             }
         });
 
-        assertThat(fileNames.size(),is(2));
-        assertThat(fileNames.get(Paths.get(targetDir, "sub1/eyal1.txt").toString()),is(true));
-        assertThat(fileNames.get(Paths.get(targetDir, "sub1/sub2/eyal2.txt").toString()),is(true));
+        assertThat("Assert that two sub directories were moved to target",fileNames.size(),is(2));
+        assertThat("Assert that eyal.txt file resides in the right place in target dir sub1/eyal1.txt",fileNames.get(Paths.get(targetDir, "sub1/eyal1.txt").toString()),is(true));
+        assertThat("Assert that eyal.txt file resides in the right place in target dir sub2/eyal2.txt",fileNames.get(Paths.get(targetDir, "sub1/sub2/eyal2.txt").toString()),is(true));
 
     }
 
